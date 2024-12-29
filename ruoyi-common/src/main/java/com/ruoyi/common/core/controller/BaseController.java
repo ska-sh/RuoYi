@@ -226,4 +226,11 @@ public class BaseController
     {
         return getSysUser().getLoginName();
     }
+
+    /**
+     * 获取用户昵称
+     */
+    public String getUserName(){
+        return getSysUser().getUserName();
+    }
 }

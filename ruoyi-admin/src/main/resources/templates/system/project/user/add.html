@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增项目人员管理')" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-project-user-add">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">项目名：</label>
+                    <div class="col-xs-4">
+                        <select id="project" class="form-control">
+                            <option th:each="project:${projects}" th:value="${project.id}" th:text="${project.name}" th:disabled="${project.status == '1'}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">用户昵称：</label>
+                    <div class="col-xs-4">
+                        <select id="user" class="form-control" multiple>
+                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}" th:disabled="${user.status == '1'}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: select2-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/project/user"
+        $("#form-project-user-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                var data = $('#form-project-user-add').serializeArray();
+                var projectId = $.form.selectSelects("project");
+                var userIds = $.form.selectSelects("user");
+                data.push({"name": "projectId", "value": projectId});
+                data.push({"name": "userIds", "value": userIds});
+                $.operate.save(prefix + "/add", data);
+            }
+        }
+        $(function() {
+            $('#project').select2({
+                placeholder: "请选择项目名称",
+                allowClear: true
+            });
+        })
+        $(function() {
+            $('#user').select2({
+                placeholder: "请选择项目人员",
+                allowClear: true
+            });
+        })
+    </script>
+</body>
+</html>

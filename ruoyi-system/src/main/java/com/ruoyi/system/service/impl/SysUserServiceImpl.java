@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
@@ -69,6 +70,11 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Autowired
     protected Validator validator;
+
+    @Override
+    public List<SysUser> selectUserAll() {
+        return userMapper.selectUserAll();
+    }
 
     /**
      * 根据条件分页查询用户列表

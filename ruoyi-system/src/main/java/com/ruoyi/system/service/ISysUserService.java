@@ -11,6 +11,9 @@ import com.ruoyi.system.domain.SysUserRole;
  */
 public interface ISysUserService
 {
+
+    public List<SysUser> selectUserAll();
+
     /**
      * 根据条件分页查询用户列表
      * 
